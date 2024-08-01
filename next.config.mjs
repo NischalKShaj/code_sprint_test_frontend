@@ -17,6 +17,7 @@ const nextConfig = {
       { protocol: "http", hostname: "localhost" },
     ],
   },
+  output: "export",
 };
 
 export default nextConfig;
