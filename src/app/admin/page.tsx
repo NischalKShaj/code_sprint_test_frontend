@@ -36,7 +36,8 @@ const AdminLogin = () => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/admin`,
-        formData
+        formData,
+        { withCredentials: true }
       );
       if (response.status === 202) {
         const { token } = response.data;

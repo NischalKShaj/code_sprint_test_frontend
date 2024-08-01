@@ -123,6 +123,7 @@ const AdminSidePanel = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/admin/logout`
         );
         if (response.status === 200) {
+          console.log(response.data);
           logout();
           localStorage.removeItem("admin_access_token");
           router.push("/admin");
