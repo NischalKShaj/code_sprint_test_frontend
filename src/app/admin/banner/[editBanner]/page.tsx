@@ -1,28 +1,34 @@
 "use client";
 
+import { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
 import AdminSidePanel from "@/components/partials/AdminSidePanel";
-import Swal from "sweetalert2";
+import { useParams } from "next/navigation";
 import { AppState } from "@/app/store";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 interface Banner {
+  id: string; // Ensure that the banner has an id field
   banner_name: string;
   banner_description: string;
   bannerImage: string;
 }
 
-const EditBanner = () => {
-  const [banner, setBanner] = useState<Banner | null>(null);
+interface EditBannerPageProps {
+  banner: Banner | null;
+}
+
+const EditBannerPage = ({ banner }: EditBannerPageProps) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [bannerData, setBannerData] = useState<Banner | null>(banner);
+  const isAdmin = AppState((state) => state.isAdmin);
   const router = useRouter();
   const params = useParams();
-  const editBanner = params?.editBanner as string | undefined;
-  const isAdmin = AppState((state) => state.isAdmin);
-  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     if (!isAdmin) {
@@ -33,35 +39,17 @@ const EditBanner = () => {
   }, [isAdmin, router]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!editBanner) return; // Handle case where editBanner is not defined
-
-      try {
-        const response = await axios.get(`/api/banner/${editBanner}`);
-        if (response.status === 200) {
-          setBanner({
-            banner_name: response.data.name,
-            banner_description: response.data.description,
-            bannerImage: response.data.bannerImage,
-          });
-          setImagePreview(response.data.bannerImage);
-        } else {
-          console.error("Banner not found");
-        }
-      } catch (error) {
-        console.error("Error fetching banner data", error);
-      }
-    };
-
-    fetchData();
-  }, [editBanner]);
+    if (bannerData?.bannerImage) {
+      setImagePreview(bannerData.bannerImage);
+    }
+  }, [bannerData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (banner) {
-      setBanner({
-        ...banner,
+    if (bannerData) {
+      setBannerData({
+        ...bannerData,
         [e.target.name]: e.target.value,
       });
     }
@@ -83,18 +71,21 @@ const EditBanner = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
-    if (banner) {
-      data.append("banner_name", banner.banner_name);
-      data.append("banner_description", banner.banner_description);
+    if (bannerData) {
+      data.append("banner_name", bannerData.banner_name);
+      data.append("banner_description", bannerData.banner_description);
       if (selectedImage) {
         data.append("bannerImage", selectedImage);
       }
     }
 
     const token = localStorage.getItem("admin_access_token");
+    setLoading(true);
+
     try {
+      // Use bannerData.id for the PUT request URL
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${editBanner}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${bannerData?.id}`,
         data,
         {
           headers: {
@@ -114,7 +105,7 @@ const EditBanner = () => {
           confirmButtonText: "OK",
         });
         router.push("/admin/banner");
-      } else if (response.status === 500) {
+      } else {
         Swal.fire({
           position: "center",
           icon: "error",
@@ -132,6 +123,8 @@ const EditBanner = () => {
         text: "Error while updating",
         confirmButtonText: "OK",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -159,7 +152,7 @@ const EditBanner = () => {
             required
             id="banner_name"
             placeholder="Enter the banner name"
-            value={banner?.banner_name}
+            value={bannerData?.banner_name || ""}
             onChange={handleChange}
           />
           <textarea
@@ -168,7 +161,7 @@ const EditBanner = () => {
             required
             id="banner_description"
             placeholder="Enter the description for the banner"
-            value={banner?.banner_description}
+            value={bannerData?.banner_description || ""}
             onChange={handleChange}
           />
 
@@ -211,4 +204,41 @@ const EditBanner = () => {
   );
 };
 
-export default EditBanner;
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banners`
+    );
+    const banners = response.data;
+
+    const paths = banners.map((banner: { id: string }) => ({
+      params: { editBanner: banner.id },
+    }));
+
+    return { paths, fallback: "blocking" };
+  } catch (error) {
+    console.error("Error fetching banners for static paths:", error);
+    return { paths: [], fallback: "blocking" };
+  }
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { editBanner } = context.params as { editBanner: string };
+
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${editBanner}`
+    );
+    const banner = response.data;
+
+    return {
+      props: { banner },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error("Error fetching banner data:", error);
+    return { props: { banner: null } };
+  }
+};
+
+export default EditBannerPage;
