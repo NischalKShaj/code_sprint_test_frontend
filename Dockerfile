@@ -15,8 +15,6 @@ COPY . .
 
 # Build the Next.js application
 RUN npm run build
-# Export the static files
-RUN npm run export
 
 # Use the official Nginx image to serve the static files
 FROM nginx:1.23-alpine
@@ -25,7 +23,7 @@ FROM nginx:1.23-alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the build output to Nginx's static files directory
-COPY --from=build /app/out /usr/share/nginx/html
+COPY --from=build /app/.next/static /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
