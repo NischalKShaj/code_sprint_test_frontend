@@ -3,14 +3,10 @@
 // importing all the required files
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { AppState } from "@/app/store";
-import dynamic from "next/dynamic";
 import axios from "axios";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
 import { useRouter } from "next/navigation";
-const AdminSidePanel = dynamic(
-  () => import("@/components/partials/AdminSidePanel"),
-  { ssr: false }
-);
+import AdminSidePanel from "@/components/partials/AdminSidePanel";
 
 const UserPage = () => {
   const [isLoading, setIsLoading] = useState(true);

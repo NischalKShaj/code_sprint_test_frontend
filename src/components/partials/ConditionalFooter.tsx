@@ -8,7 +8,7 @@ import Footer from "./Footer";
 const ConditionalFooter = () => {
   const pathname = usePathname();
 
-  const isAdminPath = pathname.startsWith("/admin");
+  const isAdminPath = pathname?.startsWith("/admin");
 
   return isAdminPath ? null : <Footer />;
 };

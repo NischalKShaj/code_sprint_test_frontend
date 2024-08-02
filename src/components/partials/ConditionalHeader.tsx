@@ -9,7 +9,7 @@ const ConditionalHeader = () => {
   const pathname = usePathname();
 
   // Check if the pathname starts with "/admin" exactly
-  const isAdminPath = pathname.startsWith("/admin");
+  const isAdminPath = pathname?.startsWith("/admin");
 
   return isAdminPath ? <AdminHeader /> : <Header />;
 };
