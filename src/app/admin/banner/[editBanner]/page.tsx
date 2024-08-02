@@ -15,27 +15,48 @@ interface Banner {
   bannerImage: string;
 }
 
-const EditBannerPage = ({ banner }: { banner: Banner | null }) => {
+async function fetchBanner(id: string): Promise<Banner | null> {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching banner data:", error);
+    return null;
+  }
+}
+
+export default function EditBannerPage({
+  params,
+}: {
+  params: { editBanner: string };
+}) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [bannerData, setBannerData] = useState<Banner | null>(banner);
+  const [loading, setLoading] = useState(true);
+  const [bannerData, setBannerData] = useState<Banner | null>(null);
   const isAdmin = AppState((state) => state.isAdmin);
   const router = useRouter();
 
   useLayoutEffect(() => {
     if (!isAdmin) {
       router.push("/admin");
-    } else {
-      setLoading(false);
     }
   }, [isAdmin, router]);
 
   useEffect(() => {
-    if (bannerData?.bannerImage) {
-      setImagePreview(bannerData.bannerImage);
-    }
-  }, [bannerData]);
+    const loadBannerData = async () => {
+      const banner = await fetchBanner(params.editBanner);
+      setBannerData(banner);
+      if (banner?.bannerImage) {
+        setImagePreview(banner.bannerImage);
+      }
+      setLoading(false);
+    };
+
+    loadBannerData();
+  }, [params.editBanner]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,7 +97,6 @@ const EditBannerPage = ({ banner }: { banner: Banner | null }) => {
     setLoading(true);
 
     try {
-      // Use bannerData.id for the PUT request URL
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${bannerData?.id}`,
         data,
@@ -195,47 +215,4 @@ const EditBannerPage = ({ banner }: { banner: Banner | null }) => {
       </section>
     </div>
   );
-};
-
-// Fetch banner data on the server side
-export async function generateStaticParams() {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banners`
-    );
-    const banners = response.data;
-
-    const paths = banners.map((banner: { id: string }) => ({
-      id: banner.id,
-    }));
-
-    return { paths, fallback: "blocking" };
-  } catch (error) {
-    console.error("Error fetching banners for static paths:", error);
-    return { paths: [], fallback: "blocking" };
-  }
-}
-
-export async function fetchBanner(id: string) {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching banner data:", error);
-    return null;
-  }
-}
-
-export async function getStaticProps({
-  params,
-}: {
-  params: { editBanner: string };
-}) {
-  const banner = await fetchBanner(params.editBanner);
-  return {
-    props: { banner },
-    revalidate: 10,
-  };
 }
