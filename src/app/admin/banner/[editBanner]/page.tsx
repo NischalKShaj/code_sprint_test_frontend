@@ -1,15 +1,13 @@
-"use client";
-
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
 import AdminSidePanel from "@/components/partials/AdminSidePanel";
 import { AppState } from "@/app/store";
 
 interface Banner {
-  id: string; // Ensure that the banner has an id field
+  id: string;
   banner_name: string;
   banner_description: string;
   bannerImage: string;
@@ -24,6 +22,26 @@ async function fetchBanner(id: string): Promise<Banner | null> {
   } catch (error) {
     console.error("Error fetching banner data:", error);
     return null;
+  }
+}
+
+export async function generateStaticParams() {
+  // Fetch all possible paths for dynamic routes
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/`
+    );
+    const banners: Banner[] = response.data;
+
+    return {
+      paths: banners.map((banner) => ({
+        params: { editBanner: banner.id },
+      })),
+      fallback: false, // Adjust based on your use case
+    };
+  } catch (error) {
+    console.error("Error fetching banner IDs:", error);
+    return { paths: [], fallback: false };
   }
 }
 
