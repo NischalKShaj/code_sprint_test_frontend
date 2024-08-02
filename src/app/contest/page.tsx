@@ -34,7 +34,7 @@ const Contest = () => {
   const [results, setResults] = useState<TestCase[]>([]);
   const [testCaseStatus, setTestCaseStatus] = useState("");
   const searchParams = useSearchParams();
-  const date = searchParams.get("date");
+  const date = searchParams ? searchParams.get("date") : null;
   const router = useRouter();
 
   useLayoutEffect(() => {
