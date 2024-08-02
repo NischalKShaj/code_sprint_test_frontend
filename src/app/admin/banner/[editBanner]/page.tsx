@@ -3,12 +3,10 @@
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import dotenv from "dotenv";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
 import AdminSidePanel from "@/components/partials/AdminSidePanel";
 import Swal from "sweetalert2";
 import { AppState } from "@/app/store";
-dotenv.config();
 
 interface Banner {
   banner_name: string;
