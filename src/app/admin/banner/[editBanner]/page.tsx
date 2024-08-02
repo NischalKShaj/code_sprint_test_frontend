@@ -2,13 +2,11 @@
 
 import { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
 import AdminSidePanel from "@/components/partials/AdminSidePanel";
-import { useParams } from "next/navigation";
 import { AppState } from "@/app/store";
-import { GetStaticPaths, GetStaticProps } from "next";
 
 interface Banner {
   id: string; // Ensure that the banner has an id field
@@ -17,18 +15,13 @@ interface Banner {
   bannerImage: string;
 }
 
-interface EditBannerPageProps {
-  banner: Banner | null;
-}
-
-const EditBannerPage = ({ banner }: EditBannerPageProps) => {
+const EditBannerPage = ({ banner }: { banner: Banner | null }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [bannerData, setBannerData] = useState<Banner | null>(banner);
   const isAdmin = AppState((state) => state.isAdmin);
   const router = useRouter();
-  const params = useParams();
 
   useLayoutEffect(() => {
     if (!isAdmin) {
@@ -204,7 +197,8 @@ const EditBannerPage = ({ banner }: EditBannerPageProps) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+// Fetch banner data on the server side
+export async function generateStaticParams() {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banners`
@@ -212,7 +206,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const banners = response.data;
 
     const paths = banners.map((banner: { id: string }) => ({
-      params: { editBanner: banner.id },
+      id: banner.id,
     }));
 
     return { paths, fallback: "blocking" };
@@ -220,25 +214,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
     console.error("Error fetching banners for static paths:", error);
     return { paths: [], fallback: "blocking" };
   }
-};
+}
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { editBanner } = context.params as { editBanner: string };
-
+export async function fetchBanner(id: string) {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${editBanner}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/banner/${id}`
     );
-    const banner = response.data;
-
-    return {
-      props: { banner },
-      revalidate: 10,
-    };
+    return response.data;
   } catch (error) {
     console.error("Error fetching banner data:", error);
-    return { props: { banner: null } };
+    return null;
   }
-};
+}
 
-export default EditBannerPage;
+export async function getStaticProps({
+  params,
+}: {
+  params: { editBanner: string };
+}) {
+  const banner = await fetchBanner(params.editBanner);
+  return {
+    props: { banner },
+    revalidate: 10,
+  };
+}
