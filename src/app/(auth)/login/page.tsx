@@ -31,6 +31,11 @@ const Login = () => {
     setFormData({ ...formData, [target.id]: target.value });
   };
 
+  // function for google auth
+  const handlePassport = () => {
+    window.open("http://localhost:4000/auth/google/callback");
+  };
+
   // function for passing the data from the frontend to the backend
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -127,7 +132,7 @@ const Login = () => {
       {message && <p className="text-red-500 mt-4">{message}</p>}
       <section className="bg-[#D9D9D9] p-8 h-[400px] w-full max-w-[370px] rounded-lg shadow-md">
         <button
-          onClick={() => handleOAuth("google")}
+          onClick={() => handlePassport()}
           className="p-4 bg-gray-50 border test border-gray-300 rounded-lg w-full mt-3"
         >
           <FontAwesomeIcon className="mr-5" icon={faGoogle} />

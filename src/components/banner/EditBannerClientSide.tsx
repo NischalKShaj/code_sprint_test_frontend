@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
