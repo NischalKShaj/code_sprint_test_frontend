@@ -40,6 +40,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // testing
     console.log("testing");
     try {
       // const selectedRole = localStorage.getItem("selectedRole");
