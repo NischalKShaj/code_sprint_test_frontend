@@ -50,6 +50,7 @@ const Banner = () => {
           }
         );
         if (response.status === 200) {
+          console.log("response", response.data);
           setBanners(response.data);
           setLoading(false);
         }
