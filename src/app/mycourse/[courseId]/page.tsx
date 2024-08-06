@@ -74,7 +74,6 @@ const CourseView = () => {
         }
       } catch (error) {
         console.error("Error fetching course data:", error);
-        router.push("/error");
       } finally {
         setLoading(false);
       }

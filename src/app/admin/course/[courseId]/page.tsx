@@ -123,8 +123,6 @@ const CourseId = () => {
               (chapter: Chapter) => chapter.videos
             )
           );
-        } else if (response.status === 500) {
-          router.push("/admin/error");
         } else {
           router.push("/admin");
         }
@@ -132,7 +130,7 @@ const CourseId = () => {
         if (error.response && error.response.status === 401) {
           router.push("/admin");
         } else {
-          router.push("/admin/error");
+          console.error("error", error);
         }
       }
     };

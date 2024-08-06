@@ -113,7 +113,6 @@ const Profile = () => {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/error");
       } finally {
         setIsLoading(false);
       }

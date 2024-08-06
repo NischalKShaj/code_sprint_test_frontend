@@ -38,7 +38,6 @@ const TutorSideBar = () => {
         }
       } catch (error) {
         console.error("error");
-        router.push("/error");
       }
     };
     if (id) {

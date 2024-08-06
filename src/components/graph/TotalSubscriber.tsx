@@ -57,7 +57,7 @@ const TotalSubscriber: React.FC = () => {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/error");
+        // router.push("/error");
         setLoading(false);
       }
     };

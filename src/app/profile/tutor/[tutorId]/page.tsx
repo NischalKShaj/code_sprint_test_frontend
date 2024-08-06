@@ -116,7 +116,6 @@ const StudentId = () => {
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      router.push("/error");
     }
   };
 

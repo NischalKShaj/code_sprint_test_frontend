@@ -79,7 +79,6 @@ const ProblemId = () => {
         }
       } catch (error) {
         console.error("error", error);
-        router.push("/error");
       }
     };
     if (problemId) {

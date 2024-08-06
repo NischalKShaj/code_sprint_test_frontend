@@ -35,6 +35,7 @@ const Logout = () => {
       if (result.isConfirmed) {
         // Perform the logout
         await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/logout/${id}`, {
+          //check for the id when i do the user login using google and update the frontend accordingly
           withCredentials: true,
         });
         localStorage.removeItem("access_token");

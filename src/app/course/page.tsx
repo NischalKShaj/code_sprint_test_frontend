@@ -79,8 +79,6 @@ const Course = () => {
             })),
           }));
           findAllCourse(decryptedCourses);
-        } else if (response.status === 500) {
-          router.push("/error");
         } else {
           router.push("/");
         }
@@ -89,7 +87,7 @@ const Course = () => {
         if (error.response && error.response.status === 401) {
           router.push("/login");
         } else {
-          router.push("/error");
+          console.error("error", error);
         }
       }
     };

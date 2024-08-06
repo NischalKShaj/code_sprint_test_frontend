@@ -80,8 +80,6 @@ const Course = () => {
             })),
           }));
           findAllCourse(decryptedCourses);
-        } else if (response.status === 500) {
-          router.push("/admin/error");
         } else {
           router.push("/admin");
         }
@@ -90,7 +88,7 @@ const Course = () => {
         if (error.response && error.response.status === 401) {
           router.push("/admin");
         } else {
-          router.push("/admin/error");
+          console.error("error", error);
         }
       }
     };

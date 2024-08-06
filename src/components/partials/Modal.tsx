@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ showModal, onClose }) => {
         }
       } catch (error) {
         console.error("error", error);
-        router.push("/error");
+        // router.push("/error");
       }
     };
     fetchData();

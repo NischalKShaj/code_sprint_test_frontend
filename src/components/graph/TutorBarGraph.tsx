@@ -55,7 +55,7 @@ const TutorBarGraph = () => {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/admin/error");
+        // router.push("/admin/error");
       }
     };
 

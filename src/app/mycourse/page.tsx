@@ -96,7 +96,6 @@ const MyCourse: React.FC = () => {
           router.push("/login");
         } else {
           console.error("Error fetching courses:", error);
-          router.push("/error");
         }
       }
     };

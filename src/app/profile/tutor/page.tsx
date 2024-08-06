@@ -62,7 +62,6 @@ const TutorProfilePage = () => {
           router.push("/login");
         } else {
           console.error("Error fetching data:", error);
-          router.push("/error");
         }
       }
     };

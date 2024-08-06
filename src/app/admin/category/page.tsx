@@ -51,7 +51,6 @@ const Category = () => {
         }
       } catch (error) {
         console.error("error", error);
-        router.push("/admin/error");
         setLoading(false);
       }
     };

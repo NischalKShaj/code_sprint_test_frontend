@@ -31,6 +31,31 @@ const Login = () => {
     setFormData({ ...formData, [target.id]: target.value });
   };
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const user = urlParams.get("user");
+
+    if (token && user) {
+      localStorage.setItem("access_token", token);
+      const userData = JSON.parse(decodeURIComponent(user));
+
+      login({
+        id: userData.id,
+        email: userData.email,
+        username: userData.username,
+        role: userData.role,
+        profileImage: userData.profileImage,
+        blocked: userData.blocked,
+        phone: userData.phone,
+        premium: userData.premium,
+        isOnline: userData.isOnline,
+      });
+
+      router.push("/");
+    }
+  }, []);
+
   // function for google auth
   const handlePassport = () => {
     window.open("http://localhost:4000/auth/google/callback");
@@ -87,36 +112,36 @@ const Login = () => {
   };
 
   //  for google and github authentication purpose
-  const handleOAuth = async (provider: string) => {
-    try {
-      if (provider === "google") {
-        try {
-          await signIn(provider, {
-            callbackUrl: "/",
-            onSuccess: () => {
-              setIsAuthenticated(true);
-            },
-          });
-        } catch (error) {
-          console.error("error in google", error);
-        }
-      } else if (provider === "github") {
-        try {
-          await signIn(provider, {
-            callbackUrl: "/",
-            onSuccess: () => {
-              setIsAuthenticated(true);
-            },
-          });
-        } catch (error) {
-          console.error("error in github", error);
-        }
-      }
-    } catch (error) {
-      console.error("error", error);
-      setIsAuthenticated(false);
-    }
-  };
+  // const handleOAuth = async (provider: string) => {
+  //   try {
+  //     if (provider === "google") {
+  //       try {
+  //         await signIn(provider, {
+  //           callbackUrl: "/",
+  //           onSuccess: () => {
+  //             setIsAuthenticated(true);
+  //           },
+  //         });
+  //       } catch (error) {
+  //         console.error("error in google", error);
+  //       }
+  //     } else if (provider === "github") {
+  //       try {
+  //         await signIn(provider, {
+  //           callbackUrl: "/",
+  //           onSuccess: () => {
+  //             setIsAuthenticated(true);
+  //           },
+  //         });
+  //       } catch (error) {
+  //         console.error("error in github", error);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("error", error);
+  //     setIsAuthenticated(false);
+  //   }
+  // };
 
   // use effect to check the user is authenticated or not
   useEffect(() => {
@@ -131,7 +156,7 @@ const Login = () => {
         Login to your CodeSprint account
       </h3>
       {message && <p className="text-red-500 mt-4">{message}</p>}
-      <section className="bg-[#D9D9D9] p-8 h-[400px] w-full max-w-[370px] rounded-lg shadow-md">
+      <section className="bg-[#D9D9D9] p-8 h-full w-full max-w-[370px] rounded-lg shadow-md">
         <button
           onClick={() => handlePassport()}
           className="p-4 bg-gray-50 border test border-gray-300 rounded-lg w-full mt-3"
@@ -139,13 +164,13 @@ const Login = () => {
           <FontAwesomeIcon className="mr-5" icon={faGoogle} />
           continue with google
         </button>
-        <button
+        {/* <button
           onClick={() => handleOAuth("github")}
           className="p-4 bg-gray-50 border border-gray-300 rounded-lg w-full mt-3"
         >
           <FontAwesomeIcon className="mr-5" icon={faGithub} />
           continue with github
-        </button>
+        </button> */}
         <form onSubmit={handleSubmit}>
           <input
             type="email"
