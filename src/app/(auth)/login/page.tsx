@@ -7,14 +7,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
 import { AppState } from "@/app/store";
-import { signIn, useSession } from "next-auth/react";
+// import { signIn, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     { email: "", password: "" }
@@ -22,7 +22,7 @@ const Login = () => {
   const router = useRouter();
   const login = AppState((state) => state.isLoggedIn);
   const authorized = AppState((state) => state.isAuthorized);
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
 
   // function for the changing value in the form
   const handleLogin: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -41,7 +41,7 @@ const Login = () => {
       const userData = JSON.parse(decodeURIComponent(user));
 
       login({
-        id: userData.id,
+        id: userData._id,
         email: userData.email,
         username: userData.username,
         role: userData.role,

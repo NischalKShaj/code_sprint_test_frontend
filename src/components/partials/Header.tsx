@@ -8,7 +8,7 @@ import Login from "../button/Login";
 import Signup from "../button/Signup";
 import { AppState } from "@/app/store";
 import Logout from "../button/Logout";
-import { useSession, signOut } from "next-auth/react";
+// import { useSession, signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { CourseState } from "@/app/store/courseStore";
@@ -22,7 +22,7 @@ const Header = () => {
   const findAllCourse = CourseState((state) => state.findAllCourse);
   const allCourse = CourseState((state) => state.allCourse);
   const [isLoading, setIsLoading] = useState(true);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [query, setQuery] = useState("");
   const pathname = usePathname();
   const today = new Date();
@@ -39,8 +39,8 @@ const Header = () => {
   // Combine session user and AppState user, prioritizing session user data
   const currentUser = {
     ...user,
-    ...session?.user,
-    username: session?.user?.name || user?.username,
+    // ...session?.user,
+    username: user?.username,
     role: user?.role || "student", // Assume 'student' if no role is defined in session
   };
 
@@ -144,7 +144,7 @@ const Header = () => {
         </ul>
 
         <div className="flex flex-col sm:flex-row items-center mt-4 sm:mt-0 w-full sm:w-auto flex-wrap">
-          {authorized || session ? (
+          {authorized ? (
             <div className="flex items-center w-full sm:w-auto justify-between sm:justify-start">
               <Link
                 href={`/profile/${currentUser.role}`}
@@ -152,16 +152,7 @@ const Header = () => {
               >
                 {currentUser.username}
               </Link>
-              {authorized ? (
-                <Logout />
-              ) : (
-                <button
-                  className="bg-[#686DE0] text-white font-bold py-2 px-4 rounded-xl sm:mr-3 mt-4 sm:mt-0"
-                  onClick={() => signOut()}
-                >
-                  Logout
-                </button>
-              )}
+              {authorized && <Logout />}
             </div>
           ) : (
             <div className="flex flex-col sm:flex-row items-center">
