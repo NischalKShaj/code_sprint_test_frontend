@@ -157,6 +157,7 @@ const Banner = () => {
                           src={banner.bannerImage}
                           alt={banner.name}
                           className="object-cover rounded-lg shadow-md"
+                          unoptimized
                         />
                       </td>
                       <td className="px-4 py-2 sm:px-6 sm:py-4 flex justify-center gap-2">

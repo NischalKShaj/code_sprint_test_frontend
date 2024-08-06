@@ -84,6 +84,7 @@ const UserSideBar = () => {
                     height={100}
                     src={user.profileImage}
                     alt="Profile Image"
+                    unoptimized
                   />
                 )}
                 <span

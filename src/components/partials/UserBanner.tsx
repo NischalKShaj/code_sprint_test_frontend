@@ -51,6 +51,7 @@ const UserBanner = () => {
               layout="fill"
               objectPosition="center"
               className="rounded-lg"
+              unoptimized
             />
           </div>
         ))}
