@@ -107,7 +107,7 @@ const AddCourse = () => {
       const response = await axios.post(
         `${
           process.env.NEXT_PUBLIC_BASE_URL
-        }/uploads?userEmail=${encodeURIComponent(email)}`,
+        }/upload?userEmail=${encodeURIComponent(email)}`,
         formData,
         {
           headers: {
