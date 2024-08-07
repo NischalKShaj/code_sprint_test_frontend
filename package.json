@@ -12,6 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -26,6 +28,7 @@
     "axios": "^1.7.2",
     "axios-retry": "^4.4.1",
     "base-64": "^1.0.0",
+    "browser-image-compression": "^2.0.2",
     "canvasjs": "^1.8.3",
     "chart.js": "^4.4.3",
     "client-only": "^0.0.1",
