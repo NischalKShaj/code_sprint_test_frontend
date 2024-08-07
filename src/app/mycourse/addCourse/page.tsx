@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import TutorSideBar from "@/components/partials/TutorSideBar";
 import SpinnerWrapper from "@/components/partials/SpinnerWrapper";
-import { compressVideo } from "@/utils/compressVideo";
 
 dotenv.config();
 
@@ -26,7 +25,6 @@ const AddCourse = () => {
   const router = useRouter();
   const isAuthorized = AppState((state) => state.isAuthorized);
   const [loading, setIsLoading] = useState(true);
-  const [compressing, setCompressing] = useState(false);
 
   useLayoutEffect(() => {
     if (!isAuthorized) {
@@ -86,16 +84,15 @@ const AddCourse = () => {
       formData.append("description", form.description);
       formData.append("amount", form.amount);
 
-      for (let i = 0; i < chapters.length; i++) {
-        const chapter = chapters[i];
-        formData.append(`chapters[${i}][chapter_name]`, chapter.chapter_name);
-
-        for (const file of chapter.files) {
-          // passing the videos for compressing
-          const compressedFile = await compressVideo(file);
-          formData.append(`chapters[${i}][files]`, compressedFile);
-        }
-      }
+      chapters.forEach((chapter, index) => {
+        formData.append(
+          `chapters[${index}][chapter_name]`,
+          chapter.chapter_name
+        );
+        chapter.files.forEach((file, fileIndex) => {
+          formData.append(`chapters[${index}][files]`, file);
+        });
+      });
 
       const token = localStorage.getItem("access_token");
 
