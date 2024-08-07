@@ -105,7 +105,9 @@ const AddCourse = () => {
       router.push("/mycourse");
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/uploads/${email}}`,
+        `${
+          process.env.NEXT_PUBLIC_BASE_URL
+        }/uploads?userEmail=${encodeURIComponent(email)}`,
         formData,
         {
           headers: {
