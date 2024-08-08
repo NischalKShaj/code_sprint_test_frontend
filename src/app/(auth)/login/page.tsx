@@ -58,7 +58,7 @@ const Login = () => {
 
   // function for google auth
   const handlePassport = () => {
-    window.open("https://app.codesprint.live/auth/google/callback");
+    window.open(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google/callback`);
   };
 
   // function for passing the data from the frontend to the backend

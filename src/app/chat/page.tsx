@@ -235,6 +235,7 @@ const Chat = () => {
                       height={40}
                       src={user.profileImage}
                       alt="Profile Image"
+                      unoptimized
                     />
                     <div className="ml-4 flex flex-col">
                       <span className="font-medium">{user.username}</span>
