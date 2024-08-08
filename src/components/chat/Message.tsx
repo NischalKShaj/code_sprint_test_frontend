@@ -134,6 +134,7 @@ const Message = ({ senderId, receiverId, receiver, socket }: MessageProps) => {
               height={40}
               src={receiver.profileImage || ""}
               alt="Receiver Profile Image"
+              unoptimized
             />
             <span
               className={`bottom-0 left-7 absolute w-3.5 h-3.5 ${
