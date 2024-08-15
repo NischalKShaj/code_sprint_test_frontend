@@ -1,4 +1,4 @@
-// file for editing the banner page
+// ================== file to show the banner edit page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -49,7 +49,6 @@ const EditBanner = () => {
           }
         );
         if (response.status === 202) {
-          console.log("banner", response.data);
           setBanner({
             banner_name: response.data.name,
             banner_description: response.data.description,
@@ -95,9 +94,6 @@ const EditBanner = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = new FormData();
-    console.log("banner", banner?.banner_name);
-    console.log("desc", banner?.banner_description);
-    console.log("img", banner?.bannerImage);
     if (banner) {
       data.append("banner_name", banner?.banner_name);
       data.append("banner_description", banner?.banner_description);

@@ -1,4 +1,4 @@
-// file to show the tutors profile page
+// ================== file to show the tutor profile page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -51,8 +51,6 @@ const TutorProfilePage = () => {
         );
 
         if (response.status === 202) {
-          console.log("response", response.data.subscribers);
-
           setTotalSub((prev) => [...response.data.subscribers]);
         } else {
           router.push("/login");

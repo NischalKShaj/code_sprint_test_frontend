@@ -1,4 +1,4 @@
-// file for signup
+// ================== file to show the signup page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -78,7 +78,6 @@ const Signup = () => {
     );
     setFormData((prevData) => ({ ...prevData, interests }));
 
-    console.log("base url", process.env.NEXT_PUBLIC_BASE_URL);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/signup`,
@@ -92,7 +91,6 @@ const Signup = () => {
       } else {
         setMessage("An unexpected error occurred");
       }
-      console.log(response.data);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
         setMessage("User already exists");

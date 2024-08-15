@@ -1,4 +1,4 @@
-// page to show each problems
+// ================== file to show the individual problems page for the application =================== //
 "use client";
 
 // importing required modules
@@ -59,7 +59,6 @@ const ProblemId = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           const decodedClientCode = base64.decode(
             response.data.problem.clientCode
           );
@@ -104,7 +103,6 @@ const ProblemId = () => {
         }
       );
       if (response.status === 202) {
-        console.log("response", response.data);
         setChange(true);
         setTestCaseStatus("passed");
       }
@@ -162,7 +160,6 @@ const ProblemId = () => {
         }
       );
       if (response.status === 202) {
-        console.log("response", response.data);
         Swal.fire({
           position: "center",
           icon: "success",

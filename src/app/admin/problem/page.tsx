@@ -1,4 +1,4 @@
-// file to add problems in the admin side
+// ================== file to show the problems page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -39,7 +39,6 @@ const Problems = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           setProblem(response.data);
         }
       } catch (error) {

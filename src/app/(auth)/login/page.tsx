@@ -1,20 +1,18 @@
-// file to show the login page for the application
+// ================== file to show the login page for the application =================== //
 "use client";
 
+// importing the required modules
 import dotenv from "dotenv";
 dotenv.config();
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
 import { AppState } from "@/app/store";
-// import { signIn, useSession } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState<{ email: string; password: string }>(
     { email: "", password: "" }
@@ -22,7 +20,6 @@ const Login = () => {
   const router = useRouter();
   const login = AppState((state) => state.isLoggedIn);
   const authorized = AppState((state) => state.isAuthorized);
-  // const { data: session, status } = useSession();
 
   // function for the changing value in the form
   const handleLogin: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -65,22 +62,16 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // testing
-    console.log("testing");
     try {
-      // const selectedRole = localStorage.getItem("selectedRole");
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/login`,
         formData,
         { withCredentials: true }
       );
-      console.log(response.data);
       const { role, token, data } = response.data;
 
       if (response.status === 202) {
-        console.log("role", role);
         localStorage.setItem("access_token", token);
-        console.log("token", token);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -106,42 +97,9 @@ const Login = () => {
         setMessage("invalid user details");
       }
     } catch (error) {
-      console.log("error", error);
       setMessage("invalid user details");
     }
   };
-
-  //  for google and github authentication purpose
-  // const handleOAuth = async (provider: string) => {
-  //   try {
-  //     if (provider === "google") {
-  //       try {
-  //         await signIn(provider, {
-  //           callbackUrl: "/",
-  //           onSuccess: () => {
-  //             setIsAuthenticated(true);
-  //           },
-  //         });
-  //       } catch (error) {
-  //         console.error("error in google", error);
-  //       }
-  //     } else if (provider === "github") {
-  //       try {
-  //         await signIn(provider, {
-  //           callbackUrl: "/",
-  //           onSuccess: () => {
-  //             setIsAuthenticated(true);
-  //           },
-  //         });
-  //       } catch (error) {
-  //         console.error("error in github", error);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("error", error);
-  //     setIsAuthenticated(false);
-  //   }
-  // };
 
   // use effect to check the user is authenticated or not
   useEffect(() => {
@@ -164,13 +122,6 @@ const Login = () => {
           <FontAwesomeIcon className="mr-5" icon={faGoogle} />
           continue with google
         </button>
-        {/* <button
-          onClick={() => handleOAuth("github")}
-          className="p-4 bg-gray-50 border border-gray-300 rounded-lg w-full mt-3"
-        >
-          <FontAwesomeIcon className="mr-5" icon={faGithub} />
-          continue with github
-        </button> */}
         <form onSubmit={handleSubmit}>
           <input
             type="email"

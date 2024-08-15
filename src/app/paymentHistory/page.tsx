@@ -1,6 +1,6 @@
-// file to show the payment history of the user
+// ================== file to show the payment history page for the application =================== //
 "use client";
-
+// importing the required modules
 import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import dotenv from "dotenv";

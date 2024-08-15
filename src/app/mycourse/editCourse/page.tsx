@@ -1,3 +1,4 @@
+// ================== file to show the edit course page for the application =================== //
 "use client";
 
 // Importing required modules
@@ -225,8 +226,6 @@ const EditCoursePage = () => {
       return;
     }
 
-    console.log("formdata", formDataToSend);
-
     const token = localStorage.getItem("access_token");
     try {
       Swal.fire({
@@ -251,7 +250,6 @@ const EditCoursePage = () => {
       );
 
       if (response.status === 202) {
-        console.log("Course updated successfully:", response.data);
         Swal.fire({
           position: "center",
           icon: "success",

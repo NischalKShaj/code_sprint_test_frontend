@@ -1,3 +1,4 @@
+// ================== file to show the category page for the application =================== //
 "use client";
 
 // importing the required modules

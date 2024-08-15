@@ -1,4 +1,4 @@
-// pages/404.js
+// ================== file to show the 404 page for the application =================== //
 
 import Link from "next/link";
 

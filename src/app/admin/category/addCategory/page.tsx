@@ -1,4 +1,4 @@
-// file to add the category
+// ================== file to show the category adding page for the application =================== //
 "use client";
 // importing required modules
 import AdminSidePanel from "@/components/partials/AdminSidePanel";

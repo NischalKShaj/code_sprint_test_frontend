@@ -1,4 +1,4 @@
-// file to show the daily coding questions
+// ================== file to show the daily questions page page for the application =================== //
 "use client";
 
 // Importing the required modules
@@ -60,7 +60,6 @@ const Contest = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           const decodedClientCode = base64.decode(
             response.data.problem.clientCode
           );
@@ -106,7 +105,6 @@ const Contest = () => {
         }
       );
       if (response.status === 202) {
-        console.log("response", response.data);
         setChange(true);
         setTestCaseStatus("passed");
       }
@@ -164,7 +162,6 @@ const Contest = () => {
         }
       );
       if (response.status === 202) {
-        console.log("response", response.data);
         Swal.fire({
           position: "center",
           icon: "success",

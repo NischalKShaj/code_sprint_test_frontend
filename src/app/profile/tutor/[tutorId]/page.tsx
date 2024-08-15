@@ -1,4 +1,4 @@
-// file to edit the tutor details
+// ================== file to show the tutor profile edit page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -74,8 +74,6 @@ const StudentId = () => {
 
     const token = localStorage.getItem("access_token");
 
-    console.log("data", data);
-
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BASE_URL}/profile/tutor/edit/${id}`,
@@ -88,8 +86,6 @@ const StudentId = () => {
           withCredentials: true,
         }
       );
-
-      console.log("response", response.data);
 
       if (response.status === 202) {
         Swal.fire({

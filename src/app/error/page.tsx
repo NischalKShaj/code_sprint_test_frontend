@@ -1,4 +1,4 @@
-// File for showing the internal server error
+// ================== file to show the internal server error page for the application =================== //
 import React from "react";
 
 const ServerError = () => {

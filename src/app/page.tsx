@@ -1,4 +1,4 @@
-// file to show the landing page for the user and the tutor
+// ================== file to show the landing page for the application =================== //
 "use client";
 
 // importing the required modules for the page

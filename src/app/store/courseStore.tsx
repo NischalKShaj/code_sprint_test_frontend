@@ -1,3 +1,4 @@
+// ================== file for the courses state for the application =================== //
 import { create } from "zustand";
 
 interface Chapter {

@@ -1,4 +1,4 @@
-// file for adding the banner
+// ================== file to show the banner adding page for the application =================== //
 "use client";
 
 // importing the required modules

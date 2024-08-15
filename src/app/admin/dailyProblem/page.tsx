@@ -1,4 +1,4 @@
-// file to show the daily problems
+// ================== file to show the daily coding problems page for the application =================== //
 "use client";
 
 // importing the required module
@@ -39,7 +39,6 @@ const DailyProblem = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           const dp: DailyProblem[] = response.data.map((item: any) => ({
             title: item.problem.title,
             category: item.problem.category,

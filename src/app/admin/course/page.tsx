@@ -1,3 +1,4 @@
+// ================== file to show the course page for the application =================== //
 "use client";
 
 // Import all the required modules
@@ -60,7 +61,6 @@ const Course = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("admin_access_token");
-        console.log("access_token", token);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/admin/all-courses`,
           {
@@ -71,7 +71,6 @@ const Course = () => {
           }
         );
         if (response.status === 200) {
-          console.log("response", response.data);
           const decryptedCourses = response.data.map((course: Course) => ({
             ...course,
             chapters: course.chapters.map((chapter) => ({
@@ -97,10 +96,7 @@ const Course = () => {
 
   const decryptVideo = (encryptedUrl: string): string => {
     try {
-      console.log("Decrypting video:", encryptedUrl);
-
       const parts = encryptedUrl.split(":");
-      console.log("parts", parts.length);
       if (parts.length !== 3) {
         throw new Error(`Invalid encrypted URL format: ${encryptedUrl}`);
       }
@@ -110,18 +106,11 @@ const Course = () => {
       const ciphertext = Buffer.from(parts[2], "hex");
       const key = Buffer.from(process.env.NEXT_PUBLIC_CIPHER_SECRETKEY!, "hex");
 
-      console.log("IV:", iv);
-      console.log("Tag:", tag);
-      console.log("Ciphertext:", ciphertext);
-      console.log("env", process.env.NEXT_PUBLIC_CIPHER_SECRETKEY);
-
       const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
       decipher.setAuthTag(tag);
 
       let decrypted = decipher.update(ciphertext, undefined, "utf8");
       decrypted += decipher.final("utf8");
-
-      console.log("Decrypted video URL:", decrypted);
 
       return decrypted;
     } catch (error: any) {
@@ -143,10 +132,8 @@ const Course = () => {
 
   // Function for showing the main course page and the payment details etc..
   const handleShow = async (id: string) => {
-    console.log("inside");
     try {
       const token = localStorage.getItem("admin_access_token");
-      console.log("token", token);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/admin/courses/${id}`,
         {
@@ -156,7 +143,6 @@ const Course = () => {
           withCredentials: true,
         }
       );
-      console.log("response", response.data);
       if (response.status === 202) {
         const decryptedCourse = {
           ...response.data,

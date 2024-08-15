@@ -1,4 +1,6 @@
+// ================== file to show the chat page for the application =================== //
 "use client";
+// importing the required modules
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { AppState } from "../store";

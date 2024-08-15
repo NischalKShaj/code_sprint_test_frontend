@@ -1,3 +1,4 @@
+// ================== file to show the course page in tutor side for the application =================== //
 "use client";
 
 // Importing the required modules
@@ -65,7 +66,6 @@ const MyCourse: React.FC = () => {
           }
         );
         if (response.status === 200) {
-          console.log("response", response.data);
           const decryptedCourse = response.data.map((course: Course) => ({
             ...course,
             chapters: course.chapters.map((chapter) => ({
@@ -85,7 +85,6 @@ const MyCourse: React.FC = () => {
               courseId: course.courseId,
             };
           });
-          console.log("flattened", flattened);
 
           setFlattenedVideos(flattened);
         } else {
@@ -106,7 +105,6 @@ const MyCourse: React.FC = () => {
   const decryptVideo = (encryptedUrl: string): string => {
     try {
       const parts = encryptedUrl.split(":");
-      console.log("parts", parts.length);
       if (parts.length !== 3) {
         throw new Error(`Invalid encrypted URL format: ${encryptedUrl}`);
       }

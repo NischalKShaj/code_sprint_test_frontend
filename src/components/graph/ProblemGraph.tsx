@@ -27,7 +27,6 @@ const ProblemGraph = () => {
           }
         );
         if (response.status === 202) {
-          console.log("first", response.data.totalSolvedProblem);
           setProblemData(response.data.totalSolvedProblem);
         }
       } catch (error) {

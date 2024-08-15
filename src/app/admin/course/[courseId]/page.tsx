@@ -1,5 +1,7 @@
+// ================== file to show the single course page for the application =================== //
 "use client";
 
+// importing the required modules
 import { CourseState } from "@/app/store/courseStore";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
@@ -59,10 +61,7 @@ const CourseId = () => {
   // function to decrypt the videos url
   const decryptVideo = (encryptedUrl: string): string => {
     try {
-      console.log("Decrypting video:", encryptedUrl);
-
       const parts = encryptedUrl.split(":");
-      console.log("parts", parts.length);
       if (parts.length !== 3) {
         throw new Error(`Invalid encrypted URL format: ${encryptedUrl}`);
       }
@@ -72,18 +71,11 @@ const CourseId = () => {
       const ciphertext = Buffer.from(parts[2], "hex");
       const key = Buffer.from(process.env.NEXT_PUBLIC_CIPHER_SECRETKEY!, "hex");
 
-      console.log("IV:", iv);
-      console.log("Tag:", tag);
-      console.log("Ciphertext:", ciphertext);
-      console.log("env", process.env.NEXT_PUBLIC_CIPHER_SECRETKEY);
-
       const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
       decipher.setAuthTag(tag);
 
       let decrypted = decipher.update(ciphertext, undefined, "utf8");
       decrypted += decipher.final("utf8");
-
-      console.log("Decrypted video URL:", decrypted);
 
       return decrypted;
     } catch (error: any) {
@@ -106,7 +98,6 @@ const CourseId = () => {
             withCredentials: true,
           }
         );
-        console.log("response", response.data);
         if (response.status === 202) {
           const decryptedCourse = {
             ...response.data,

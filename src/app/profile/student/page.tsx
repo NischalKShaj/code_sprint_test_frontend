@@ -1,4 +1,4 @@
-// file for profile
+// ================== file to show the students profile page for the application =================== //
 "use client";
 
 // Import necessary modules
@@ -64,7 +64,6 @@ const Profile = () => {
       setIsLoading(true);
       const id = user?.id;
       const token = localStorage.getItem("access_token");
-      console.log("token", token);
 
       if (!id || !token) {
         router.push("/login");
@@ -137,7 +136,6 @@ const Profile = () => {
           }
         );
         if (response.status === 200) {
-          console.log("soln", response.data);
           setSolvedProblems(response.data.problems);
           setSolved(response.data.solvedProblemsDifficulty);
           setDifficultyCount(response.data.difficultyCounts);

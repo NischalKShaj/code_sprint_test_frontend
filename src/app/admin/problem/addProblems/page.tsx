@@ -1,4 +1,4 @@
-// file to add new problems
+// ================== file to show the add problems page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -184,7 +184,6 @@ const AddProblems = () => {
       );
       if (response.status === 202) {
         const decodedOutput = response.data.decodedOutput;
-        console.log("response", response.data.decodedOutput);
         if (parseInt(decodedOutput) === parseInt(expectedOutput)) {
           Swal.fire({
             position: "center",
@@ -238,8 +237,6 @@ const AddProblems = () => {
     e.preventDefault();
 
     const token = localStorage.getItem("admin_access_token");
-
-    console.log("formData", formData);
 
     try {
       const response = await axios.post(

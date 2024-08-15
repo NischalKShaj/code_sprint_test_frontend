@@ -1,4 +1,4 @@
-// store/index.tsx
+// ================== file users and admins state for the application =================== //
 import { create } from "zustand";
 
 // Creating the interface for the state of the application

@@ -1,5 +1,7 @@
-// page for the otp verification
+// ================== file to show the otp page for the application =================== //
+
 "use client";
+// importing the required modules
 import axios from "axios";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
 import dotenv from "dotenv";
@@ -31,7 +33,6 @@ const OTP = () => {
       if (response.status === 201) {
         localStorage.removeItem("selectedRole");
         localStorage.removeItem("email");
-        console.log(response.data);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -57,7 +58,6 @@ const OTP = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/otp/resend`,
         { email }
       );
-
       console.log(response.data);
       setTimer(60);
       setIsResending(false);

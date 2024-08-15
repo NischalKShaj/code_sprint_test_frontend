@@ -1,4 +1,4 @@
-// server error page for admin side
+// ================== file to show the server side error page of the admin for the application =================== //
 
 import React from "react";
 

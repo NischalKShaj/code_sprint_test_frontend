@@ -1,4 +1,4 @@
-// page to show the login page for the admin
+// ================== file to show the admin login page for the application =================== //
 "use client";
 
 // importing the required modules

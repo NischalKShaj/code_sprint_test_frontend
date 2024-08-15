@@ -1,4 +1,4 @@
-// page to show the dashboard for the admin
+// ================== file to show the dashboard page of the admin for the application =================== //
 "use client";
 // importing the required modules
 import AdminSidePanel from "@/components/partials/AdminSidePanel";

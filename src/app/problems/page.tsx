@@ -1,4 +1,4 @@
-// file for showing problems
+// ================== file to show the problems page for the application =================== //
 "use client";
 
 // importing required modules
@@ -65,7 +65,6 @@ const Problems = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           showProblems(response.data);
         }
       } catch (error) {

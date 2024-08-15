@@ -1,3 +1,4 @@
+// ================== file to show the individual course in tutor side page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -59,7 +60,6 @@ const CourseView = () => {
           }
         );
         if (response.status === 202) {
-          console.log("response", response.data);
           const decryptedCourses = {
             ...response.data,
             chapters: response.data.chapters.map((chapter: Chapter) => ({
@@ -81,10 +81,7 @@ const CourseView = () => {
 
     const decryptVideo = (encryptedUrl: string): string => {
       try {
-        console.log("Decrypting video:", encryptedUrl);
-
         const parts = encryptedUrl.split(":");
-        console.log("parts", parts.length);
         if (parts.length !== 3) {
           throw new Error(`Invalid encrypted URL format: ${encryptedUrl}`);
         }
@@ -97,18 +94,11 @@ const CourseView = () => {
           "hex"
         );
 
-        console.log("IV:", iv);
-        console.log("Tag:", tag);
-        console.log("Ciphertext:", ciphertext);
-        console.log("env", process.env.NEXT_PUBLIC_CIPHER_SECRETKEY);
-
         const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
         decipher.setAuthTag(tag);
 
         let decrypted = decipher.update(ciphertext, undefined, "utf8");
         decrypted += decipher.final("utf8");
-
-        console.log("Decrypted video URL:", decrypted);
 
         return decrypted;
       } catch (error: any) {

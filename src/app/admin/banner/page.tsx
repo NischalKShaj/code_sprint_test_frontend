@@ -1,3 +1,4 @@
+// ================== file to show the banner page for the application =================== //
 "use client";
 
 // importing the required modules
@@ -50,7 +51,6 @@ const Banner = () => {
           }
         );
         if (response.status === 200) {
-          console.log("response", response.data);
           setBanners(response.data);
           setLoading(false);
         }
@@ -67,7 +67,6 @@ const Banner = () => {
   };
 
   const handleDelete = async (id: string) => {
-    console.log(`Deleting banner with ID: ${id}`);
     const token = localStorage.getItem("admin_access_token");
     try {
       const response = await axios.delete(

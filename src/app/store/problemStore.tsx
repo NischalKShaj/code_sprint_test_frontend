@@ -1,4 +1,4 @@
-// store for managing the state for the problems
+// ================== file to show the problems state for the application =================== //
 
 // importing the required modules
 import { create } from "zustand";
