@@ -45,7 +45,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/discuss" className="hover:underline">
+                  <Link href="/chat" className="hover:underline">
                     Discuss
                   </Link>
                 </li>
@@ -72,25 +72,6 @@ const Footer = () => {
                     className="hover:underline"
                   >
                     LinkedIn
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-black">
-                Legal
-              </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium space-y-2">
-                <li>
-                  <Link href="/contact" className="hover:underline">
-                    Contact us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="hover:underline">
-                    About us
                   </Link>
                 </li>
               </ul>
