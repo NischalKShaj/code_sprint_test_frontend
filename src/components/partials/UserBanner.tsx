@@ -15,7 +15,7 @@ const UserBanner = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(process.env.NEXT_PUBLIC_BASE_URL);
+        console.log("base urls", process.env.NEXT_PUBLIC_BASE_URL);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/`
         );
